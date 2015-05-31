@@ -1,7 +1,8 @@
 //Variable Declaration	
-var map, mapCenter, locCol, fTableID, legend, markers, pointLayer, Column, subLayer, zoomLevel, firms, heatmapRadio, idx, which;
+var map, mapCenter, locCol, fTableID, legend, markers, pointLayer, Column, subLayer, zoomLevel, firms, heatmapRadio, marker, infowindow, latlng;
 var layFirms, catBox, FirmsBox, laySA, selCat, selFir;
-
+//InfoWindowItems
+var image, name, address, category, website;
 
 function initialize() {
 
@@ -12,7 +13,7 @@ function initialize() {
   
   map = new google.maps.Map(document.getElementById('map-canvas'), {
     center: mapCenter,
-    zoom: 11
+    zoom: 11,
   });
   
   //Initialize the Google Fusion Tables Layer
@@ -27,53 +28,8 @@ function initialize() {
 		select: locCol,
 		from: fTableID
 	},
-	
-	styles: [{
-		pointOptions: {
-			fillColor: '#0099FF',
-			fillOpoacity: 0.9
-		}
-	},{
-		where: 'Niche = Arts and Entertainment',
-		pointOptions:{
-			fillColor: '#006666'
-		}
-	},{
-		where: 'Niche = Boutique',
-		pointOptions:{
-			fillColor: '#00CC99'
-		}
-	},{
-		where: 'Niche = Brewery',
-		pointOptions:{
-			fillColor: '#00CCFF'
-		}
-	},{	
-		where: 'Niche = Cooperative',
-		pointOptions:{
-			fillColor: '#66FF66'
-		}
-	},{
-		where: 'Niche = Culinary',
-		pointOptions:{
-			fillColor: '#0066FF'
-		}
-	},{
-		where: 'Niche = Drinks and Conversation',
-		pointOptions:{
-			fillColor: '#3366CC'
-		}
-	},{
-		where: 'Niche = Local Identity',
-		pointOptions:{
-			fillColor: '#339966'
-		}
-	},{
-		where: 'Niche = Outdoor Outfitters',
-		pointOptions:{
-			fillColor: '#3366FF'
-		}
-	}]
+	templateId: 2,
+	styleId: 2
   });
   var heatmap = new google.maps.visualization.HeatmapLayer();
   /*var saLayer = new google.maps.FusionTablesLayer({
@@ -88,21 +44,60 @@ function initialize() {
   // pointLayer = document.getElementById('Point');
   // heatmapLayer = document.getElementById('HeatmapLayer');
   // saLayer = document.getElementById('saLAYER');
-  
  
   catBox = document.getElementById('Niche');
   FirmsBox = document.getElementById('Firms');
   
   getData("Niche");
   getData("Firms");
-  
+    
   markers = [];
   
   layFirms.setMap(null);
   initialLayer.setMap(map);
   
+  
+  
+  /*image = "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT image FROM "+ fTableID +"  WHERE Firms='Living Art Studio '&key=AIzaSyAjYEWvtUDpX0WkI7_pKmlzwrMKgJnore4";
+  
+  google.maps.event.addListener(initialLayer,'click',function(e){
+  
+  
+	e.infoWindowHtml = "<div class='googft-info-window'  style='font-family: sans-serif; width: 250px; height: 20em; overflow-y: auto;'>\
+						<img src="+image +"><br><br> style='width: 150px; vertical-align:top; margin-right: .5em'/><br><br>\
+						<font size='4', color='black'><b>{Firms}</font><br>\
+						{Address}<br>\
+						{Sources}\
+						{Contact Person}<br>\
+						<b>website:</b> <a href='{website}' target='_blank'>{website}</a><br> \
+						<b>Niche:</b> {Niche}\
+						</div>";
+	});
+ 
+ var zoom = 11;
+  var infowindow;
+  var infowindowContent = '';
+  var coordinate;
+  
+  var latlng = new google.maps.LatLng(44.7,-89.8);
+  
+  
+  map.setZoom(12);
+  if(infowindow) infowindow.close();
+  elseinfowindow=new google.maps.InfoWindow();
+  
+	infoWindowContent = infowindow.setContent(
+        '<h3>This comes from the Fusion Table: <br />' + e.row['Niche'].value + '</h3>' +
+        '<br />' +
+        '<p>This is hardcoded to the script <br /> and will appear in each infowindow</p>');
+
+    infowindow.setPosition(e.latLng);
+    map.setCenter(e.latLng);
+    infowindow.open(map);        
+	});
+*/
 }
-			
+	
 
 function getData(Column) {
 	// var firms = new Array();
@@ -208,11 +203,11 @@ function searchCriteria(Column, dataHandlerType) {
 	}
 }
 
-function sendRequest(statement, column, dataHandlerType){
+function sendRequest(statement, Column, dataHandlerType){
 	if(dataHandlerType ==dataHandlerCenter) {
 		removeMarkers();
 	};
-	var query = "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT LatDec,LonDec"+ column +" FROM "+ tableID + statement +"&key=AIzaSyAjYEWvtUDpX0WkI7_pKmlzwrMKgJnore4";
+	var query = "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT LatDec,LonDec"+ Column +" FROM "+ tableID + statement +"&key=AIzaSyAjYEWvtUDpX0WkI7_pKmlzwrMKgJnore4";
 	var queryurl = encodeURI(query);
 	var dataQuer = $.get(queryurl, dataHandlerType)
 	.done(function(){
