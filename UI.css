@@ -1,0 +1,64 @@
+html { 
+	height: 100%;
+}
+body {
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+#map-canvas {
+    height: 100%;
+    width: 100%;
+	margin-right: 0%;
+}
+
+#panel {
+	position: absolute;
+	float: left;
+	left: 25px;
+	top: 25px;
+	margin-left: 0px;
+	z-index: 1;
+	background: rgba(164,71,71,0.6);
+	font-size:16px;
+	font-weight: bold;
+	padding: 10px;
+	border: 1px solid #999;
+	margin: 10px;
+	border-radius: 6px;
+	width: 230px;
+}
+.Select {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 220px;
+	padding: 5px;
+	font-size: 14px;
+	line-height: 1;
+	border: 0;
+	border-radius: 4px;
+	height: 28px;
+	cursor: pointer;
+	text-overflow: '';
+	max-width: 150px;
+}
+.Select option{
+	width: 220px;
+}
+#Refresh_Map{
+	position:relative; 
+	left: 120px;
+	height: 25px;
+	width: 100px;
+	border-color: none;
+	background-color: #BCD2EE;
+	border-radius: 10px;
+	margin: auto;
+	text-align: center;
+}	
+
+#title {
+	position: absolute;
+	float: left;
+}
+	
