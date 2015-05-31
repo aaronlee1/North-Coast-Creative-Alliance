@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Fusion Tables layers</title>
+	
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry,visualization&sensor=false"></script>
+    <script type="text/javascript" src="5_19/squel.min.js"></script>
+    <script type="text/javascript" src="5_19/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="5_19/MarkersFTQueryIW5_30.js"></script>
+	<script type="text/javascript" src="5_19/leaflet.js"></script>
+	<script type="text/javascript" src="5_19/leaflet-src.js"></script>
+	<link rel = "stylesheet" type = "text/css" href = "5_19/UI.css">		
+	</head>
+	<body>
+    <div id="map-canvas"></div>
+	<div id="panel">
+		<label>
+			Creative Industries
+		</label>
+		<div id="panel_data">
+			<b class ="Text">Category: </b>
+			<select id="Niche" class = "Select" onchange = "clickCat();">
+				<option value="0">All</option>
+			</select>
+			<br>
+			<b class = "Text">Firm: </b>
+			<select id ="Firms" class = "Select" onchange = "clickFirms()">
+				<option value="1">Browse Firms</option>
+			</select>			
+		 </div>	
+	</div>	
+  </body>
+</html>
