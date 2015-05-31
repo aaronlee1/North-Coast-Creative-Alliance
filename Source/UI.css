@@ -45,17 +45,6 @@ body {
 .Select option{
 	width: 220px;
 }
-#Refresh_Map{
-	position:relative; 
-	left: 120px;
-	height: 25px;
-	width: 100px;
-	border-color: none;
-	background-color: #BCD2EE;
-	border-radius: 10px;
-	margin: auto;
-	text-align: center;
-}	
 
 #title {
 	position: absolute;

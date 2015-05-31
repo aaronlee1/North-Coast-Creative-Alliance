@@ -26,7 +26,54 @@ function initialize() {
 	query: {
 		select: locCol,
 		from: fTableID
-	}
+	},
+	
+	styles: [{
+		pointOptions: {
+			fillColor: '#0099FF',
+			fillOpoacity: 0.9
+		}
+	},{
+		where: 'Niche = Arts and Entertainment',
+		pointOptions:{
+			fillColor: '#006666'
+		}
+	},{
+		where: 'Niche = Boutique',
+		pointOptions:{
+			fillColor: '#00CC99'
+		}
+	},{
+		where: 'Niche = Brewery',
+		pointOptions:{
+			fillColor: '#00CCFF'
+		}
+	},{	
+		where: 'Niche = Cooperative',
+		pointOptions:{
+			fillColor: '#66FF66'
+		}
+	},{
+		where: 'Niche = Culinary',
+		pointOptions:{
+			fillColor: '#0066FF'
+		}
+	},{
+		where: 'Niche = Drinks and Conversation',
+		pointOptions:{
+			fillColor: '#3366CC'
+		}
+	},{
+		where: 'Niche = Local Identity',
+		pointOptions:{
+			fillColor: '#339966'
+		}
+	},{
+		where: 'Niche = Outdoor Outfitters',
+		pointOptions:{
+			fillColor: '#3366FF'
+		}
+	}]
   });
   var heatmap = new google.maps.visualization.HeatmapLayer();
   /*var saLayer = new google.maps.FusionTablesLayer({
@@ -53,6 +100,7 @@ function initialize() {
   
   layFirms.setMap(null);
   initialLayer.setMap(map);
+  
 }
 			
 
