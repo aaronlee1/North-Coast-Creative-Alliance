@@ -19,7 +19,8 @@ body {
 	top: 25px;
 	margin-left: 0px;
 	z-index: 1;
-	background: rgba(164,71,71,0.6);
+	background: #3083D6;
+	opacity: 0.8;
 	font-size:16px;
 	font-weight: bold;
 	padding: 10px;
@@ -27,6 +28,49 @@ body {
 	margin: 10px;
 	border-radius: 6px;
 	width: 230px;
+}
+#legend {
+	background: #3083D6;
+	padding: 10px;
+	margin: 5px;
+	font-size: 12px;
+	border-radius: 10px;
+	opacity: 0.9;
+	display: inline;
+	
+}
+
+.horizontal {
+	display: inline;
+	border: 1px solid;
+	height: 12px;
+	width: 12px;
+	margin-right: 3px;
+	float: left;
+}
+.red {
+	background: #FF3333;
+}
+.yellow {
+	background: #FFFF4D;
+}
+.green {
+	background: #4DDB4D;
+}
+.blue {
+	background: #4747FF;
+}
+.purple {
+	background: #AD5CFF;
+}
+.brown {
+	background: #A37547;
+}
+.grey {
+	background: #969F9F;
+}
+.white {
+	background: #FFFFFF;
 }
 .Select {
 	margin-top: 5px;

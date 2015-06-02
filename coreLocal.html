@@ -4,10 +4,11 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Fusion Tables layers</title>
+	<script type="text/javascript" src="http://www.google.com/jsapi"></script> 
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry,visualization&sensor=false"></script>
     <script type="text/javascript" src="Source/squel.min.js"></script>
     <script type="text/javascript" src="Source/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="Source/MarkersFTQueryIW5_31.js"></script>
+	<script type="text/javascript" src="Source/MarkersFTQueryIW6_2.js"></script>
 	<script type="text/javascript" src="Source/leaflet.js"></script>
 	<script type="text/javascript" src="Source/leaflet-src.js"></script>
 	<link rel = "stylesheet" type = "text/css" href = "Source/UI.css">		
@@ -20,15 +21,16 @@
 		</label>
 		<div id="panel_data">
 			<b class ="Text">Category: </b>
-			<select id="Niche" class = "Select" onchange = "clickCat();">
+			<select id="Niche" class = "Select" onchange = "clickCat();changeQuery();">
 				<option value="0">All</option>
 			</select>
 			<br>
 			<b class = "Text">Firm: </b>
-			<select id ="Firms" class = "Select" onchange = "clickFirms()">
+			<select id ="Firms" class = "Select" onchange = "clickFirms();changeQuery();">
 				<option value="1">Browse Firms</option>
 			</select>			
 		 </div>	
-	</div>	
+	</div>
   </body>
 </html>
+

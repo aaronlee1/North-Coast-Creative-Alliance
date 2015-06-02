@@ -1,8 +1,11 @@
 //Variable Declaration	
 var map, mapOptions, mapCenter, locCol, fTableID, legend, markers, pointLayer, Column, subLayer, zoomLevel, firms, heatmapRadio, marker, infowindow, latlng;
-var layFirms, catBox, FirmsBox, laySA, selCat, selFir;
+var catBox, FirmsBox, laySA, selCat, selFir;
 //InfoWindowItems
 var image, name, address, category, website;
+
+google.load('visualization', '1', {'packages':['corechart', 'table', 'geomap']});
+
 
 function initialize() {
 
@@ -38,12 +41,7 @@ function initialize() {
     
  
   //Initialize the Google Fusion Tables Layer
-  layFirms = new google.maps.FusionTablesLayer({
-	query: { 
-		select: locCol,
-		from: fTableID
-	}
-  });
+  
   initialLayer = new google.maps.FusionTablesLayer({
 	query: {
 		select: locCol,
@@ -70,9 +68,6 @@ function initialize() {
   map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(legend);
   
 
-
-
-  var heatmap = new google.maps.visualization.HeatmapLayer();
   /*var saLayer = new google.maps.FusionTablesLayer({
 	query: { 
 		select: reach,
@@ -94,13 +89,49 @@ function initialize() {
     
   markers = [];
   
-  layFirms.setMap(null);
   initialLayer.setMap(map);
   
   
 }
+/*
+function changeQuery(term) {
+	subLayer.setOptions({
+		query:{
+			select:'Address',
+			from: fTableID,
+			where: "Niche ="+term
+		}
+	});
 	
+	var queryText = encodeURIComponent("SELECT 'Address' FROM "+fTableID+" WHERE Niche = "+term);
+	var query = new google.visualization.Query('http://www.google.com/fusiontables/gvizdata?tq='  + queryText);
+	
+	query.send(zoomTo);
+}
 
+function zoomTo(response) {
+	if(!response) {
+		alert('no response');
+		return;
+	}
+	if(response.isError()){
+		alert('Error in query: ' +response.getMessage() + '' + response.getDetailedMessage());
+		return;
+	}
+		FTresponse = response;
+		numRows = response.getDataTable().getNumberOfRows();
+		numCols = response.getDataTable().getNumberOfColumns();
+		
+		var bounds = new google.maps.LatLngBounds();
+		for(i = 0; i < numRows; i++) {
+			var point = new google.maps.LatLng(
+				parseFloat(response.getDataTable().getValue(i,1)),
+				parseFloat(response.getDataTable().getValue(i,2)));
+			bounds.extend(point);
+		}
+		map.fitBounds(bounds);
+}
+*/
 function getData(Column) {
 	// var firms = new Array();
 	// var latList = new Array();
@@ -149,13 +180,19 @@ function clickCat(){
 		var dataQuer = $.get(queryurl, CatUpdateHandler);
 		updateMap();
 	}else {
-		var i;
+		getData("Firms");
+		updateMap();
+	}
+	
+		/*var i;
 		for (i = FirmsBox.options.length-1;i>=0;i--)
 		{
-			FirmsBox. remove(i);
+			FirmsBox.remove[i];
 		}
 		addOption(FirmsBox, "Browse Creative Firms", "1");
-	}
+		
+		
+	}*/
 }
 
 function CatUpdateHandler(data) {
@@ -178,76 +215,16 @@ function clickFirms(){
 		var query = "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT Firms FROM "+ fTableID +"  WHERE Firms='" + selFir + "'&key=AIzaSyAjYEWvtUDpX0WkI7_pKmlzwrMKgJnore4";
 		var queryurl = encodeURI(query);
 		var dataQuer = $.get(queryurl);
+		firmChoice();
 	}else {
 		var i;
 		for (i = FirmsBox.options.length-1;i>=0;i--)
 		{
 			
 		}
-		removeMarkers();
 	}
 }
 			
-		
-/*function searchCriteria(Column, dataHandlerType) {
-	if (selCat ==0) {
-		if (selFir ==0) {
-			sendRequest(" GROUP BY LatDec,LonDec", Column, dataHandlerType);
-		}else { sendRequest("WHERE Firms ='"+ selFir + "'", Column, dataHandlerType);
-		};
-	}else { 
-		if(selFir == 0) {
-			sendRequest("WHERE Niche ='" + selCat + "'GROUP BY LatDec, LonDec", Column, dataHandlerType);
-		}else { 
-			sendRequest("WHERE Niche ='" + selCat + "'AND Firms='" + selFir + "'", Column, dataHandlerType);
-		}
-	}
-}
-
-function sendRequest(statement, Column, dataHandlerType){
-	if(dataHandlerType ==dataHandlerCenter) {
-		removeMarkers();
-	};
-	var query = "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT LatDec,LonDec"+ Column +" FROM "+ tableID + statement +"&key=AIzaSyAjYEWvtUDpX0WkI7_pKmlzwrMKgJnore4";
-	var queryurl = encodeURI(query);
-	var dataQuer = $.get(queryurl, dataHandlerType)
-	.done(function(){
-		mapcenter = map.getCenter();
-		zoomlevel = map.getZoom();
-	});
-}
-
-function dataHandlerCenter(data) {
-	if (data.hasOwnProperty('rows')){
-		var bounds = new google.maps.LatLngBounds();
-		for(i=0; i < data.rows.length; i++) {
-			var point = new google.maps.LatLng(
-				data.rows[i][0],
-				data.rows[i][0]
-			);
-			var marker = new google.maps.Marker({
-				position: point,
-				map: map
-			});
-			markers.push(marker);
-			bounds.extend(point);
-		}
-		
-		map.fitBound(bounds);
-	}else{
-		alert("No data");
-	};
-}
-
-function removeMarkers() {
-	if(markers.length !=0) {
-		for(var i = 0; i < markers.length; i++) {
-			markers[i].setMap(null);
-		};
-		markers = [];
-	}
-}
-*/
 function updateMap() {
 	
 
@@ -265,12 +242,31 @@ function updateMap() {
 	
 	subLayer.setMap(map);
 	
-	}else if(selCat == 0){
-		layFirms.setMap(map);
-	}		
+	}else{
+		initialLayer.setMap(map);
+	}
 		
 }
+function firmChoice() {
 
-
-
+	if(selFir !=0){
+		subLayer.setMap(null);
+		initialLayer.setMap(null);
+		firmLayer = new google.maps.FusionTablesLayer({
+		query: {
+			select: locCol,
+				from: fTableID,
+				where:"Firms ='"+selFir +"'"
+		},
+		templateId: 2,
+		styleId: 2			
+		});
+			
+		firmLayer.setMap(map);
+			
+		}else{
+				
+	}
+}
+	
 google.maps.event.addDomListener(window, 'load', initialize);
