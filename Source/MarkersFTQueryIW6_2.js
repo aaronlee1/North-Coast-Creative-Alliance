@@ -4,9 +4,6 @@ var catBox, FirmsBox, laySA, selCat, selFir;
 //InfoWindowItems
 var image, name, address, category, website;
 
-google.load('visualization', '1', {'packages':['corechart', 'table', 'geomap']});
-
-
 function initialize() {
 
 //Variable Definition
